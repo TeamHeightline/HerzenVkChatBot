@@ -10,24 +10,25 @@ from utils.constants import MENU_KB
 time_table_router = DefaultRouter()
 
 
-async def create_timetable_text():
-    week = [["Информационные технологии \n", "Дискретная математика \n", "Информатика \n"],
-            ["Физика \n", "Физика \n"],
-            ["Дискретная математика \n"],
-            ["Информатика \n", "Информационные технологии в физике \n"],
-            ["Информационные технологии в математике \n"],
-            ["Физика"]
+def create_timetable_text() -> str:
+    week = [["Информационные технологии [лаб] \n", "Дискретная математика [практ]\n", "Информатика [лекц]\n"],
+            ["Физика [лекц]\n", "Физика [лекц]\n"],
+            ["Дискретная математика [практ]\n"],
+            ["Информатика [лаб]\n", "Информационные технологии в физике [лаб]\n"],
+            ["Информационные технологии в математике [лаб]\n", "Физика [лаб]\n", "Основы компьютерной алгебры [""лаб]\n",
+             "Физическая культура и спорт [практ]\n"],
+            ["Иностранный язык[лекц]\n"], ["Физическая культура[лекц] \n"], ["Философия[лекц] \n"]
             ]
     type_text = ''
     for i in range(0, 6):
         for a in (week[i]):
             type_text = type_text + str(a)
         type_text = type_text + "\n"
-        print(type_text)
+    return type_text
 
 
 @simple_bot_message_handler(time_table_router, PayloadFilter({"command": "timetable"}))
 async def time_table_view(event: SimpleBotEvent):
     return await event.answer(
-        message="Расписание" + str(create_timetable_text())
+        message="Расписание : \n" + str(create_timetable_text())
     )

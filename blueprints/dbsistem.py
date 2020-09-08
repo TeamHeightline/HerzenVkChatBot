@@ -37,5 +37,3 @@ async def get_user(user_id):
     else:
         return first_name, last_name
 
-
-print(get_user(127))
