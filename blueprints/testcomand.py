@@ -8,9 +8,10 @@ from vkwave.bots import (DefaultRouter,
 from utils.constants import MENU_KB
 
 test_router = DefaultRouter()
+first_messge_router = DefaultRouter()
 
 
-@simple_bot_message_handler(test_router, CommandsFilter("Начать!"))
+@simple_bot_message_handler(test_router, TextFilter("Начать!"))
 async def first_message_to_bot(event: SimpleBotEvent):
     return await event.answer(
         message="Добро пожаловаь, здесь будет собрана вся важная информация и расписание занятий",
@@ -18,7 +19,7 @@ async def first_message_to_bot(event: SimpleBotEvent):
     )
 
 
-@simple_bot_message_handler(test_router, TextFilter("111"))
+@simple_bot_message_handler(first_messge_router, TextFilter("111"))
 async def test(event: SimpleBotEvent):
     return await event.answer(
         message="Test passed",

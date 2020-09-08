@@ -20,6 +20,6 @@ class UserEnterMiddleware(BaseMiddleware):
                       str(user_last_name) + " успешно создан")
             else:
                 print('Ошибка при создание пользователя')
-                return False
+                return MiddlewareResult(False)
         print('Ботом воспользовался ' + str(user_first_name) + ' ' + str(user_last_name))
         return MiddlewareResult(True)
