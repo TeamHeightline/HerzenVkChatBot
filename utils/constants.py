@@ -31,9 +31,4 @@ faculties = ['0.0 Волховский филиал',
              '2.7 факультет химии',
              '2.8 факультет юридический']
 
-# import requests
-#
-# payload = {'faculty': 'институт информационных технологий и технологического образования', 'level': "бакалавриат"}
-#
-# r = requests.get('https://herzen-timetable.herokuapp.com//api/timetable/levels', params=payload)
-# print(r.text)
+

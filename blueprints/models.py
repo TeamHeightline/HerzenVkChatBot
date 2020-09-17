@@ -3,6 +3,10 @@ from peewee import *
 
 conn = PostgresqlDatabase('vk_bot_db', password='2034', user='postgres')
 
+# pem add blueprints.models.Foo - добаление модели в систему контроля миграций
+# pem watch - генерация миграций для всех обноруженных изенений
+# pem migrate - отправка миграций в БД
+
 
 class BaseModel(Model):
     class Meta:
