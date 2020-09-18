@@ -16,11 +16,11 @@ bot.middleware_manager.add_middleware(UserEnterMiddleware())
 bot.dispatcher.add_router(test_router)
 bot.dispatcher.add_router(time_table_router)
 
-
-
 # Warning! ONLY ADMIN PERMISSION
+
 bot.middleware_manager.add_middleware(IsUserAdminMiddleware)
 
 bot.dispatcher.add_router(admin_router)
+
 
 bot.run_forever()

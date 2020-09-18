@@ -18,7 +18,25 @@ class User(BaseModel):
     first_name = CharField(max_length=30)
     last_name = CharField(max_length=30)
     is_admin = BooleanField(default=False)
+    await_message = IntegerField(default=0)
 
     class Meta:
         table_name = 'User'
 
+
+class University(BaseModel):
+    university_id = IntegerField(primary_key=True)
+    university_name = CharField(max_length=200)
+
+
+class UniversityLevel(BaseModel):
+    from_university = ForeignKeyField(University)
+    university_level_name = CharField(max_length=204)
+    int_level = IntegerField()
+    university_level_id = IntegerField(primary_key=True)
+
+
+class Group(BaseModel):
+    from_university_level = ForeignKeyField(UniversityLevel)
+    group_name = CharField(max_length=200)
+    group_id = IntegerField(primary_key=True)
