@@ -1,6 +1,6 @@
 from peewee import *
 from .models import *
-
+import logging
 
 async def create_user(user_id, first_name, last_name):
     User.create(user_id=user_id, first_name=first_name, last_name=last_name)
@@ -39,6 +39,6 @@ async def is_user_admin(user_id):
 
 
 async def change_await_message(user_id, await_value):
-    u = User.update(await_message=await_value).where(User.user_id == user_id)
-    u.save()
+    u = User.update(await_message=await_value).where(User.user_id == user_id).execute()
+    logging.debug("await message changed")
 
