@@ -5,13 +5,13 @@ from vkwave.bots import (DefaultRouter,
                          CommandsFilter,
                          TextFilter
                          )
-from utils.constants import MENU_KB
+from utils.constants import MENU_KB, TEST_KB
 from .dbsistem import change_await_message,get_group_url
 
 test_router = DefaultRouter()
 
 
-@simple_bot_message_handler(test_router, TextFilter(text="начать", ignore_case=True))
+@simple_bot_message_handler(test_router, TextFilter(text="начать", ignore_case=True),)
 async def first_message_to_bot(event: SimpleBotEvent):
     return await event.answer(
         message="Добро пожаловаь, здесь будет собрана вся важная информация и расписание занятий",
@@ -34,4 +34,12 @@ async def test_group_url(event: SimpleBotEvent):
     return await event.answer(
         message="Group url:" + str(r),
         keyboard=MENU_KB.get_keyboard()
+    )
+
+
+@simple_bot_message_handler(test_router, TextFilter("!"))
+async def test_keyboard_dropper(event: SimpleBotEvent):
+    return await event.answer(
+        message="Клавиатура для тестов",
+        keyboard=TEST_KB.get_keyboard()
     )
