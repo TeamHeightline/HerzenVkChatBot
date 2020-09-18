@@ -2,6 +2,7 @@ from peewee import *
 from .models import *
 import logging
 
+
 async def create_user(user_id, first_name, last_name):
     User.create(user_id=user_id, first_name=first_name, last_name=last_name)
 
@@ -50,4 +51,5 @@ async def get_group_url(group_id):
             group_url = i.group_url
         except:
             return None
+    logging.debug("Group URL successfully received")
     return group_url
