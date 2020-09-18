@@ -18,7 +18,7 @@ bot.dispatcher.add_router(time_table_router)
 
 # Warning! ONLY ADMIN PERMISSION
 
-bot.middleware_manager.add_middleware(IsUserAdminMiddleware)
+# bot.middleware_manager.add_middleware(IsUserAdminMiddleware)
 
 bot.dispatcher.add_router(admin_router)
 
