@@ -39,6 +39,17 @@ async def is_user_admin(user_id):
     return is_admin
 
 
+async def gey_await_message(user_id):
+    db_response = User.select().where(User.user_id == user_id).execute()
+    for i in db_response:
+        try:
+            await_message = i.await_message
+        except:
+            return None
+    logging.debug("Await message successfully received")
+    return await_message
+
+
 async def change_await_message(user_id, await_value):
     u = User.update(await_message=await_value).where(User.user_id == user_id).execute()
     logging.debug("await message changed")
@@ -53,3 +64,4 @@ async def get_group_url(group_id):
             return None
     logging.debug("Group URL successfully received")
     return group_url
+

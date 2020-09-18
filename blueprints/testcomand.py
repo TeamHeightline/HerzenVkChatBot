@@ -11,8 +11,16 @@ from .dbsistem import change_await_message,get_group_url
 test_router = DefaultRouter()
 
 
-@simple_bot_message_handler(test_router, TextFilter(text="начать", ignore_case=True),)
+@simple_bot_message_handler(test_router, TextFilter(text="начать", ignore_case=True))
 async def first_message_to_bot(event: SimpleBotEvent):
+    return await event.answer(
+        message="Добро пожаловаь, здесь будет собрана вся важная информация и расписание занятий",
+        keyboard=MENU_KB.get_keyboard()
+    )
+
+
+@simple_bot_message_handler(test_router, PayloadFilter({"command": "начать"}))
+async def first_message_to_bot_payload(event: SimpleBotEvent):
     return await event.answer(
         message="Добро пожаловаь, здесь будет собрана вся важная информация и расписание занятий",
         keyboard=MENU_KB.get_keyboard()
@@ -42,4 +50,13 @@ async def test_keyboard_dropper(event: SimpleBotEvent):
     return await event.answer(
         message="Клавиатура для тестов",
         keyboard=TEST_KB.get_keyboard()
+    )
+
+
+@simple_bot_message_handler(test_router, PayloadFilter({"command": "prepare to get group url"}))
+async def first_message_to_bot_payload(event: SimpleBotEvent):
+    await change_await_message(user_id=event.object.object.from_id, await_value=201)
+    return await event.answer(
+        message="Введите айди вашей группы",
+        keyboard=MENU_KB.get_keyboard()
     )
