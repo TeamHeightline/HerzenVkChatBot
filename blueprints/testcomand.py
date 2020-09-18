@@ -2,11 +2,11 @@ from vkwave.bots import (DefaultRouter,
                          SimpleBotEvent,
                          simple_bot_message_handler,
                          PayloadFilter,
-                         CommandsFilter,
                          TextFilter
                          )
+
 from utils.constants import MENU_KB, TEST_KB
-from .dbsistem import change_await_message,get_group_url
+from .dbsistem import change_await_message, get_group_url
 
 test_router = DefaultRouter()
 
@@ -55,7 +55,7 @@ async def test_keyboard_dropper(event: SimpleBotEvent):
 
 @simple_bot_message_handler(test_router, PayloadFilter({"command": "prepare to get group url"}))
 async def first_message_to_bot_payload(event: SimpleBotEvent):
-    await change_await_message(user_id=event.object.object.from_id, await_value=201)
+    await change_await_message(user_id=event.object.object.message.from_id, await_value=201)
     return await event.answer(
         message="Введите айди вашей группы",
         keyboard=MENU_KB.get_keyboard()

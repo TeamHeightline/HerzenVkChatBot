@@ -39,13 +39,13 @@ async def is_user_admin(user_id):
     return is_admin
 
 
-async def gey_await_message(user_id):
+async def gey_await_message(user_id:int)->int:
     db_response = User.select().where(User.user_id == user_id).execute()
     for i in db_response:
         try:
             await_message = i.await_message
         except:
-            return None
+            return 0
     logging.debug("Await message successfully received")
     return await_message
 

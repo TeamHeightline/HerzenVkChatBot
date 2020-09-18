@@ -6,7 +6,7 @@ from blueprints import (test_router,
                         time_table_router,
                         admin_router
                         )
-
+from middlewares.awaitmessage import await_router
 logging.basicConfig(level="DEBUG")
 
 bot = SimpleLongPollBot(TOKEN, group_id=GROUP_ID)
@@ -19,9 +19,9 @@ bot.dispatcher.add_router(time_table_router)
 
 # Warning! ONLY ADMIN PERMISSION
 
-bot.middleware_manager.add_middleware(IsUserAdminMiddleware())
+# bot.middleware_manager.add_middleware(IsUserAdminMiddleware())
 
 bot.dispatcher.add_router(admin_router)
-
+bot.dispatcher.add_router(await_router)
 
 bot.run_forever()
