@@ -42,3 +42,12 @@ async def change_await_message(user_id, await_value):
     u = User.update(await_message=await_value).where(User.user_id == user_id).execute()
     logging.debug("await message changed")
 
+
+async def get_group_url(group_id):
+    db_response = Group.select().where(Group.group_id == group_id).execute()
+    for i in db_response:
+        try:
+            group_url = i.group_url
+        except:
+            return None
+    return group_url
