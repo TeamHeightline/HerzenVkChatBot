@@ -36,3 +36,9 @@ async def is_user_admin(user_id):
         except:
             return None
     return is_admin
+
+
+async def change_await_message(user_id, await_value):
+    u = User.update(await_message=await_value).where(User.user_id == user_id)
+    u.save()
+
