@@ -20,7 +20,6 @@ async def await_message_processor(event: SimpleBotEvent):
     if await_message != 0:
         if await_message == 201:
             timetable_url = await get_group_url(group_id=event.object.object.message.text)
-            print(timetable_url)
             await change_await_message(user_id=user_id, await_value=0)
             logging.debug("Group url received")
             timetable_text = await get_timetable(timetable_url)

@@ -17,7 +17,7 @@ async def get_timetable(url):
             timetable_text += (res_dict['days'][i]['hours'][a]['timespan'] + " ")
             try:
                 timetable_text += (res_dict['days'][i]['hours'][a]['weeks'][0]['classes'][0]['class'] + " " +
-                                   res_dict['days'][i]['hours'][a]['weeks'][0]['classes'][0]['type'] + " " +
+                                   res_dict['days'][i]['hours'][a]['weeks'][0]['classes'][0]['type'] + " \n" +
                                    res_dict['days'][i]['hours'][a]['weeks'][0]['classes'][0]['teacher'] + " " +
                                    res_dict['days'][i]['hours'][a]['weeks'][0]['classes'][0]['place'] + "\n")
             except:

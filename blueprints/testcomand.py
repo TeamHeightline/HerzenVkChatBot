@@ -53,7 +53,7 @@ async def test_keyboard_dropper(event: SimpleBotEvent):
     )
 
 
-@simple_bot_message_handler(test_router, PayloadFilter({"command": "prepare to get group url"}))
+@simple_bot_message_handler(test_router, PayloadFilter({"command": "prepare to get group id"}))
 async def first_message_to_bot_payload(event: SimpleBotEvent):
     await change_await_message(user_id=event.object.object.message.from_id, await_value=201)
     return await event.answer(

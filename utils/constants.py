@@ -12,7 +12,7 @@ ADMIN_KB.add_text_button(text="Добавить группу", payload={"command
 TEST_KB = Keyboard(inline=True)
 TEST_KB.add_text_button(text="Режим нового пользователя", payload={"command": "начать"}, color=ButtonColor.POSITIVE)
 TEST_KB.add_row()
-TEST_KB.add_text_button(text="Получение урлов группы", payload={"command": "prepare to get group url"},
+TEST_KB.add_text_button(text="Получение расписания по айди группы", payload={"command": "prepare to get group id"},
                         color=ButtonColor.SECONDARY)
 
 faculties = ['0.0 Волховский филиал',
