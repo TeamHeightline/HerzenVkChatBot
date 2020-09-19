@@ -12,6 +12,9 @@ class BaseModel(Model):
     class Meta:
         database = conn
 
+# await_message value:
+# 201 - ожидается урл групы
+
 
 class User(BaseModel):
     user_id = IntegerField(primary_key=True)

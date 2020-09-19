@@ -9,6 +9,12 @@ MENU_KB.add_text_button(text="Настройки", payload={"command": "settings
 ADMIN_KB = Keyboard()
 ADMIN_KB.add_text_button(text="Добавить группу", payload={"command": "add_group"}, color=ButtonColor.POSITIVE)
 
+TEST_KB = Keyboard(inline=True)
+TEST_KB.add_text_button(text="Режим нового пользователя", payload={"command": "начать"}, color=ButtonColor.POSITIVE)
+TEST_KB.add_row()
+TEST_KB.add_text_button(text="Получение расписания по айди группы", payload={"command": "prepare to get group id"},
+                        color=ButtonColor.SECONDARY)
+
 faculties = ['0.0 Волховский филиал',
              "0.1 Выборгский филиал",
              '1.0 Институт информационных технологий и технологического образования',
