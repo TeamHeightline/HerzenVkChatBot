@@ -3,7 +3,7 @@ import json
 
 
 async def get_timetable(url):
-    payload = {"groupURL": "/static/schedule_view.php?id_group=12459&sem=1"}
+    payload = {"groupURL": url}
     r = requests.get('https://herzen-timetable.herokuapp.com/api/timetable/group', payload)
 
     res_dict = json.loads(r.content)
@@ -24,4 +24,4 @@ async def get_timetable(url):
                 pass
         timetable_text += " \n \n"
 
-    return(timetable_text)
+    return timetable_text
