@@ -54,5 +54,5 @@ async def start_registration(event: SimpleBotEvent):
     await registration_university_1(event=event)
     await registration_university_2(event=event)
     return await event.answer(
-        message='Добро пожаловать в бота, пожалуйста, пройдите регистрацию. Для начала выбрите вашу направление',
+        message='Добро пожаловать в бота, пожалуйста, пройдите регистрацию. Для начала выбрите ваше направление',
     )
