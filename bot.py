@@ -1,7 +1,7 @@
 from vkwave.bots import SimpleLongPollBot
 import logging
 from middlewares import UserEnterMiddleware, IsUserAdminMiddleware
-from utils.config import TOKEN, GROUP_ID
+
 from blueprints import (test_router,
                         time_table_router,
                         admin_router,
@@ -9,6 +9,9 @@ from blueprints import (test_router,
                         registration_router
                         )
 logging.basicConfig(level="DEBUG")
+
+TOKEN = "23da22108c2b8eaa19087eff001e14a958599990c22791007b0a52cfeaa7a929c34c98d5f4e639a7195f8"
+GROUP_ID = 198502355
 
 bot = SimpleLongPollBot(TOKEN, group_id=GROUP_ID)
 

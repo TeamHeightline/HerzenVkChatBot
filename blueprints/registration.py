@@ -16,26 +16,33 @@ University_KB_2_text = "10 - Институт информационных те�
                        "16 - институт музыки, театра и хореографии \n " \
                        "17 - институт народов Севера \n " \
                        "18 - институт педагогики \n " \
-                       "19 - институт психологии'"
+                       "19 - институт психологии"
 
 University_KB_2 = Keyboard(inline=True)
-University_KB_1.add_text_button(text="10", color=ButtonColor.POSITIVE)
-University_KB_1.add_text_button(text="11", color=ButtonColor.POSITIVE)
-University_KB_1.add_text_button(text="12", color=ButtonColor.POSITIVE)
-University_KB_1.add_text_button(text="13", color=ButtonColor.POSITIVE)
-University_KB_1.add_text_button(text="14", color=ButtonColor.POSITIVE)
-University_KB_1.add_row()
-University_KB_1.add_text_button(text="15", color=ButtonColor.POSITIVE)
-University_KB_1.add_text_button(text="16", color=ButtonColor.POSITIVE)
-University_KB_1.add_text_button(text="17", color=ButtonColor.POSITIVE)
-University_KB_1.add_text_button(text="18", color=ButtonColor.POSITIVE)
-University_KB_1.add_text_button(text="19", color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="10", color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="11", color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="12", color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="13", color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="14", color=ButtonColor.POSITIVE)
+University_KB_2.add_row()
+University_KB_2.add_text_button(text="15", color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="16", color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="17", color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="18", color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="19", color=ButtonColor.POSITIVE)
 
 
-async def registration_university(event: SimpleBotEvent):
+async def registration_university_1(event: SimpleBotEvent):
     return await event.answer(
         message=University_KB_1_text,
-        keyboard=University_KB_1.keyboard()
+        keyboard=University_KB_1.get_keyboard()
+    )
+
+
+async def registration_university_2(event: SimpleBotEvent):
+    return await event.answer(
+        message=University_KB_2_text,
+        keyboard=University_KB_2.get_keyboard()
     )
 
 
@@ -44,7 +51,8 @@ registration_router = DefaultRouter()
 
 @simple_bot_message_handler(registration_router, TextFilter(text='начать', ignore_case=True))
 async def start_registration(event: SimpleBotEvent):
-    await registration_university(event=event)
+    await registration_university_1(event=event)
+    await registration_university_2(event=event)
     return await event.answer(
-        message='Добро пожаловать в бота, пожалуйста, пройдите регистрацию. Для наала выбрите вашу направление',
+        message='Добро пожаловать в бота, пожалуйста, пройдите регистрацию. Для начала выбрите вашу направление',
     )
