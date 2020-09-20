@@ -1,5 +1,5 @@
 from vkwave.bots import BaseMiddleware, BotEvent, MiddlewareResult
-from blueprints.dbsistem import get_user, create_user
+from blueprints.services.dbsistem import get_user, create_user
 import logging
 
 

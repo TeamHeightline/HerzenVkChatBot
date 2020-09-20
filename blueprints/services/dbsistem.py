@@ -1,5 +1,4 @@
-from peewee import *
-from .models import *
+from blueprints.services.models import *
 import logging
 
 
