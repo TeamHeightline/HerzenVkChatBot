@@ -5,13 +5,16 @@ from config import TOKEN, GROUP_ID
 from blueprints import (test_router,
                         time_table_router,
                         admin_router,
-                        await_router
+                        await_router,
+                        registration_router
                         )
 logging.basicConfig(level="DEBUG")
 
 bot = SimpleLongPollBot(TOKEN, group_id=GROUP_ID)
 
 bot.middleware_manager.add_middleware(UserEnterMiddleware())
+
+bot.dispatcher.add_router(registration_router)
 
 bot.dispatcher.add_router(test_router)
 bot.dispatcher.add_router(time_table_router)

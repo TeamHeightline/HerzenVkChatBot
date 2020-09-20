@@ -6,7 +6,7 @@ from vkwave.bots import (DefaultRouter,
                          )
 
 from utils.constants import MENU_KB, TEST_KB
-from .dbsistem import change_await_message, get_group_url
+from blueprints.services.dbsistem import change_await_message, get_group_url
 
 test_router = DefaultRouter()
 
