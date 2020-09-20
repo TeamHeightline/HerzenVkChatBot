@@ -1,7 +1,7 @@
 from vkwave.bots import SimpleLongPollBot
 import logging
 from middlewares import UserEnterMiddleware, IsUserAdminMiddleware
-from config import TOKEN, GROUP_ID
+from utils.config import TOKEN, GROUP_ID
 from blueprints import (test_router,
                         time_table_router,
                         admin_router,
