@@ -64,3 +64,7 @@ async def get_group_url(group_id: int):
     logging.debug("Group URL successfully received")
     return group_url
 
+
+async def change_university(user_id: int, university_id: int):
+    u = User.update(university_id=university_id).where(User.user_id == user_id).execute()
+    logging.debug("university changed")

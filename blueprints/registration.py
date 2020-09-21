@@ -1,4 +1,7 @@
-from vkwave.bots import Keyboard, ButtonColor, SimpleBotEvent, DefaultRouter, simple_bot_message_handler, TextFilter
+from vkwave.bots import Keyboard, ButtonColor, SimpleBotEvent, DefaultRouter, simple_bot_message_handler, TextFilter, \
+    PayloadFilter
+
+from blueprints.services.dbsistem import change_university
 
 University_KB_1_text = "0 - Волховский филиал \n" \
                        "1 - Выборгский филиал"
@@ -19,17 +22,17 @@ University_KB_2_text = "10 - Институт информационных те�
                        "19 - институт психологии"
 
 University_KB_2 = Keyboard(inline=True)
-University_KB_2.add_text_button(text="10", color=ButtonColor.POSITIVE)
-University_KB_2.add_text_button(text="11", color=ButtonColor.POSITIVE)
-University_KB_2.add_text_button(text="12", color=ButtonColor.POSITIVE)
-University_KB_2.add_text_button(text="13", color=ButtonColor.POSITIVE)
-University_KB_2.add_text_button(text="14", color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="10", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="11", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="12", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="13", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="14", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
 University_KB_2.add_row()
-University_KB_2.add_text_button(text="15", color=ButtonColor.POSITIVE)
-University_KB_2.add_text_button(text="16", color=ButtonColor.POSITIVE)
-University_KB_2.add_text_button(text="17", color=ButtonColor.POSITIVE)
-University_KB_2.add_text_button(text="18", color=ButtonColor.POSITIVE)
-University_KB_2.add_text_button(text="19", color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="15", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="16", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="17", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="18", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
+University_KB_2.add_text_button(text="19", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
 
 
 async def registration_university_1(event: SimpleBotEvent):
@@ -53,6 +56,17 @@ registration_router = DefaultRouter()
 async def start_registration(event: SimpleBotEvent):
     await registration_university_1(event=event)
     await registration_university_2(event=event)
+    # Добавить продолжение списка
     return await event.answer(
         message='Добро пожаловать в бота, пожалуйста, пройдите регистрацию. Для начала выбрите ваше направление',
+    )
+
+
+@simple_bot_message_handler(registration_router, PayloadFilter({"command": "set university"}))
+async def set_university(event: SimpleBotEvent):
+    user_id = event.object.object.message.from_id
+    university_id = int(event.object.object.message.text)
+    await change_university(user_id=user_id, university_id=university_id)
+    return await event.answer(
+        message="Вы выбрали:"
     )
