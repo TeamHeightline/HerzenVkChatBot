@@ -68,3 +68,19 @@ async def get_group_url(group_id: int):
 async def change_university(user_id: int, university_id: int):
     u = User.update(university_id=university_id).where(User.user_id == user_id).execute()
     logging.debug("university changed")
+
+
+async def gey_university_id(user_id: int) -> int:
+    db_response = User.select().where(User.user_id == user_id).execute()
+    for i in db_response:
+        try:
+            university_id = i.university_id
+        except:
+            return 0
+    logging.debug("Await message successfully received")
+    return university_id
+
+
+async def change_university_level(user_id: int, university_level_id: int):
+    u = User.update(university_level_id=university_level_id).where(User.user_id == user_id).execute()
+    logging.debug("university level changed")
