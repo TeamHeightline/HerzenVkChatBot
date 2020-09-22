@@ -84,3 +84,30 @@ async def gey_university_id(user_id: int) -> int:
 async def change_university_level(user_id: int, university_level_id: int):
     u = User.update(university_level_id=university_level_id).where(User.user_id == user_id).execute()
     logging.debug("university level changed")
+
+
+async def get_level_id(user_id: int) -> int:
+    db_response = User.select().where(User.user_id == user_id).execute()
+    for i in db_response:
+        try:
+            university_level_id = i.university_level_id
+        except:
+            return 0
+    logging.debug("University level successfully received")
+    return university_level_id
+
+
+async def get_university_group_list(from_university_level_id: int) -> list:
+    db_response = Group.select().where(Group.from_university_level == from_university_level_id)
+    group_list = [[]]
+    for i in db_response:
+        try:
+            group_list.append([i.group_name, i.group_id])
+        except:
+            pass
+    return group_list
+
+
+async def change_user_group_id(user_id: int, group_id: int):
+    u = User.update(group_id=group_id).where(User.user_id == user_id).execute()
+    logging.debug("group id level changed")

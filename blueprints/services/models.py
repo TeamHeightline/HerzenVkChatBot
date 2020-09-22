@@ -31,7 +31,7 @@ class UniversityLevel(BaseModel):
 class Group(BaseModel):
     from_university_level = ForeignKeyField(UniversityLevel)
     group_name = CharField(max_length=200)
-    group_id = IntegerField(primary_key=True);
+    group_id = IntegerField(primary_key=True)
     group_url = TextField(default='/static/schedule_view.php?id_group=12459&sem=1')
     subgroup = IntegerField()
 

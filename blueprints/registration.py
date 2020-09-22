@@ -1,7 +1,8 @@
 from vkwave.bots import Keyboard, ButtonColor, SimpleBotEvent, DefaultRouter, simple_bot_message_handler, TextFilter, \
     PayloadFilter
 
-from blueprints.services.dbsistem import change_university, gey_university_id, change_university_level
+from blueprints.services.dbsistem import change_university, gey_university_id, change_university_level, get_level_id, \
+    get_university_group_list, change_user_group_id
 
 # Доки ) короче, документация, здесь у нас модуль регистрации, вот так вот, вообще, что туть происходит,
 # здесь у нас хрянятся клавиатуды со всеми университетами, значениям на кнопушках соответствует ячейка
@@ -16,11 +17,11 @@ University_KB_1_text = "0 - Волховский филиал \n" \
                        "1 - Выборгский филиал"
 
 University_KB_1 = Keyboard(inline=True)
-University_KB_1.add_text_button(text="0", payload={"command": "timetable"}, color=ButtonColor.POSITIVE)
-University_KB_1.add_text_button(text="1", payload={"command": "timetable"}, color=ButtonColor.POSITIVE)
+University_KB_1.add_text_button(text="0", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
+University_KB_1.add_text_button(text="1", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
 
 University_KB_2_text = "10 - Институт информационных технологий и технологического образования \n" \
-                       "11 - Институт востоковедения \n " \
+                       "11/зжх*-89 - Институт востоковедения \n " \
                        "12 - Институт детства \n " \
                        "13 - Институт дефектологического образования и реабилитации \n " \
                        "14 - Институт иностранных языков \n " \
@@ -84,9 +85,6 @@ University_Level_KB.add_text_button(text="2", payload={"command": "set level"}, 
 University_Level_KB.add_text_button(text="3", payload={"command": "set level"}, color=ButtonColor.POSITIVE)
 University_Level_KB.add_text_button(text="4", payload={"command": "set level"}, color=ButtonColor.POSITIVE)
 
-University_Group_KB = Keyboard(inline=True)
-University_Group_KB.add_text_button(text="номер группы", payload={"command": "set group"}, color=ButtonColor.POSITIVE)
-
 
 async def registration_university_1(event: SimpleBotEvent):
     return await event.answer(
@@ -136,19 +134,49 @@ async def set_university(event: SimpleBotEvent):
     university_id = int(event.object.object.message.text)
     await change_university(user_id=user_id, university_id=university_id)
     return await event.answer(
-        message="Теперь давайте выбирети ваш курс",
+        message="Теперь выбирети ваш курс",
         keyboard=University_Level_KB.get_keyboard()
     )
 
 
+async def group_to_message(group_list: list) -> (object, str):
+    GROUP_KB = Keyboard(inline=True)
+    group_text = ''
+    for i in range(len(group_list)):
+        try:
+            print(i)
+            group_text += str(group_list[i][1]) + " - " + str(group_list[i][0] + "\n")
+            GROUP_KB.add_text_button(text=group_list[i][1], payload={"command": "set group"},
+                                     color=ButtonColor.POSITIVE)
+        except:
+            pass
+    return GROUP_KB, group_text
+
+
 @simple_bot_message_handler(registration_router, PayloadFilter({"command": "set level"}))
-async def set_group(event: SimpleBotEvent):
+async def set_level(event: SimpleBotEvent):
+    # отвечает за то, чтобы записать челокеку его university_level_id
     user_id = event.object.object.message.from_id
     text = event.object.object.message.text
     university_id = await gey_university_id(user_id=user_id)
     university_level_id = int(str(university_id) + str(text))
     await change_university_level(user_id=user_id, university_level_id=university_level_id)
+    # на основе уровня Направление -> Курс, добывает из базы список групп для этого курса
+    university_level = await get_level_id(user_id=user_id)
+    group_list = await get_university_group_list(from_university_level_id=university_level)
+    # Превращение списка групп в конечное сообщение с клавиатурой
+    GROUP_KB, group_text = await group_to_message(group_list=group_list)
     return await event.answer(
-        message="Теперь выбирети вашу группу",
-        keyboard=University_Group_KB.get_keyboard()
+        message=("Теперь выбирети вашу группу \n " + group_text),
+        keyboard=GROUP_KB.get_keyboard()
+    )
+
+
+@simple_bot_message_handler(registration_router, PayloadFilter({"command": "set group"}))
+async def set_group(event: SimpleBotEvent):
+    user_id = int(event.object.object.message.from_id)
+    group_id = int(event.object.object.message.text)
+    await change_user_group_id(user_id=user_id, group_id=group_id)
+    return await event.answer(
+        message="Регистрация окончена"
     )
