@@ -13,6 +13,8 @@ from blueprints.services.dbsistem import change_university, gey_university_id, c
 # отправляют сообщение с прозьбой выбора курса и кнопками, по нажатию кнопок срабатывает payload - set level
 # дальше вообще магия, этот пэйлод поднимает метод set_group, он собирает вместе айди уника и курса,
 # получается university_level_id он и идет в базу данных
+from utils.constants import MENU_KB
+
 University_KB_1_text = "0 - Волховский филиал \n" \
                        "1 - Выборгский филиал"
 
@@ -144,7 +146,6 @@ async def group_to_message(group_list: list) -> (object, str):
     group_text = ''
     for i in range(len(group_list)):
         try:
-            print(i)
             group_text += str(group_list[i][1]) + " - " + str(group_list[i][0] + "\n")
             GROUP_KB.add_text_button(text=group_list[i][1], payload={"command": "set group"},
                                      color=ButtonColor.POSITIVE)
@@ -178,5 +179,7 @@ async def set_group(event: SimpleBotEvent):
     group_id = int(event.object.object.message.text)
     await change_user_group_id(user_id=user_id, group_id=group_id)
     return await event.answer(
-        message="Регистрация окончена"
+        message="Регистрация окончена, теперь вам доступно ваше расписание",
+        keyboard=MENU_KB.get_keyboard()
+
     )

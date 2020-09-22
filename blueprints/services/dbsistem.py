@@ -20,6 +20,16 @@ async def get_user(user_id: int):
         return first_name, last_name
 
 
+async def get_user_group_id(user_id: int):
+    db_response = User.select().where(User.user_id == user_id).execute()
+    for i in db_response:
+        try:
+            group_id = i.group_id
+        except:
+            return None
+    return group_id
+
+
 async def get_all_users() -> list:
     db_response = User.select().execute()
     user_list = []
