@@ -7,7 +7,7 @@ from vkwave.bots import (DefaultRouter,
                          )
 
 from blueprints.services.api import get_timetable
-from blueprints.services.dbsistem import get_user_group_id, get_group_url
+from blueprints.services.dbsystem import get_user_group_id, get_group_url
 from utils.constants import MENU_KB
 
 time_table_router = DefaultRouter()

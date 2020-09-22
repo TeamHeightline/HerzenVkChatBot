@@ -1,7 +1,7 @@
 from vkwave.bots import Keyboard, ButtonColor, SimpleBotEvent, DefaultRouter, simple_bot_message_handler, TextFilter, \
     PayloadFilter
 
-from blueprints.services.dbsistem import change_university, gey_university_id, change_university_level, get_level_id, \
+from blueprints.services.dbsystem import change_university, gey_university_id, change_university_level, get_level_id, \
     get_university_group_list, change_user_group_id
 
 # Доки ) короче, документация, здесь у нас модуль регистрации, вот так вот, вообще, что туть происходит,

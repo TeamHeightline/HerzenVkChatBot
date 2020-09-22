@@ -4,7 +4,7 @@ from vkwave.bots import (DefaultRouter,
                          RegexFilter
                          )
 
-from blueprints.services.dbsistem import change_await_message, get_group_url, gey_await_message
+from blueprints.services.dbsystem import change_await_message, get_group_url, gey_await_message
 from utils.constants import MENU_KB
 import logging
 from blueprints.services.api import get_timetable
