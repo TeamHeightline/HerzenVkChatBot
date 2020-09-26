@@ -11,10 +11,16 @@ async def get_timetable(url):
     timetable_text = ''
 
     for i in range(0, 6):
-        timetable_text += ((res_dict['subgroups'][0]['days'][i]['day']).title() + ' ' +
+        try:
+            timetable_text += ((res_dict['subgroups'][0]['days'][i]['day']).title() + ' ' +
                            res_dict['subgroups'][0]['days'][i]['hours'][0]['weeks'][0]['classes'][0]['dates'][0]['dates_raw'] + "\n")
+        except:
+            pass
         for a in range(0, 4):
-            timetable_text += (res_dict['subgroups'][0]['days'][i]['hours'][a]['timespan'] + " ")
+            try:
+             timetable_text += (res_dict['subgroups'][0]['days'][i]['hours'][a]['timespan'] + " ")
+            except:
+                pass
             try:
                 timetable_text += (res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['class'] + " " +
                                    res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['type'] + " \n" +

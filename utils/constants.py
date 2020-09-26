@@ -14,6 +14,7 @@ TEST_KB.add_text_button(text="Режим нового пользователя",
 TEST_KB.add_row()
 TEST_KB.add_text_button(text="Получение расписания по айди группы", payload={"command": "prepare to get group id"},
                         color=ButtonColor.SECONDARY)
+TEST_KB.add_text_button(text="Создать группу", payload={"command": "add_group"}, color=ButtonColor.PRIMARY)
 
 faculties = ['0.0 Волховский филиал',
              "0.1 Выборгский филиал",

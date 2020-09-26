@@ -121,3 +121,9 @@ async def get_university_group_list(from_university_level_id: int) -> list:
 async def change_user_group_id(user_id: int, group_id: int):
     u = User.update(group_id=group_id).where(User.user_id == user_id).execute()
     logging.debug("group id level changed")
+
+
+async def add_group(group_name: str, group_id: int, from_university_level_id: int, group_url: str, subgroup: int = 0) -> int:
+    Group.create(group_id=group_id, group_name=group_name, from_university_level_id=from_university_level_id, group_url=group_url,
+                 subgroup=subgroup)
+    return 1

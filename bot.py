@@ -17,16 +17,21 @@ bot = SimpleLongPollBot(TOKEN, group_id=GROUP_ID)
 
 bot.middleware_manager.add_middleware(UserEnterMiddleware())
 
+
 bot.dispatcher.add_router(registration_router)
 
 bot.dispatcher.add_router(test_router)
 bot.dispatcher.add_router(time_table_router)
-bot.dispatcher.add_router(await_router)
+
 # Warning! ONLY ADMIN PERMISSION
 
 # bot.middleware_manager.add_middleware(IsUserAdminMiddleware())
 
 bot.dispatcher.add_router(admin_router)
 
+# SUPER WARNING!
+# Все что ниже этого роутера будет игнорится, в эвэйт роутере регулярка бирет все сообщения, вообще все
+
+bot.dispatcher.add_router(await_router)
 
 bot.run_forever()
