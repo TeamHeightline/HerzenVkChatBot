@@ -38,7 +38,7 @@ def get_timetable_test(url):
     r = requests.get('https://herzen-timetable.herokuapp.com/api/timetable/group', payload)
 
     res_dict = json.loads(r.content)
-    print(str(res_dict).replace("'", "\""))
+    # print(str(res_dict).replace("'", "\""))
+    return (str(res_dict).replace("'", "\""))
 
-
-get_timetable_test("/static/schedule_view.php?id_group=12460&sem=1")
+print(get_timetable_test("/static/schedule_view.php?id_group=12460&sem=1"))
