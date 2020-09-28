@@ -34,9 +34,9 @@ async def await_message_processor(event: SimpleBotEvent):
         university_level = await get_level_id(user_id)
         group_list = await get_university_group_list(from_university_level_id=university_level)
         new_group_id = str(str(university_level) + str(len(group_list)))
-        print(new_group_id)
+        # print(new_group_id)
         group_name, group_url = event.object.object.message.text.split(" ")
-        print(group_url, group_name)
+        # print(group_url, group_name)
         await add_group(group_id=int(new_group_id), from_university_level_id=university_level, group_url=group_url,
                         group_name=group_name)
         await change_await_message(user_id=user_id, await_value=0)

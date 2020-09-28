@@ -31,3 +31,14 @@ async def get_timetable(url):
         timetable_text += " \n \n"
 
     return timetable_text
+
+
+def get_timetable_test(url):
+    payload = {"groupURL": url}
+    r = requests.get('https://herzen-timetable.herokuapp.com/api/timetable/group', payload)
+
+    res_dict = json.loads(r.content)
+    print(str(res_dict).replace("'", "\""))
+
+
+get_timetable_test("/static/schedule_view.php?id_group=12460&sem=1")
