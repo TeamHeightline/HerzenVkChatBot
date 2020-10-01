@@ -20,6 +20,8 @@ async def time_table_view(event: SimpleBotEvent):
     user_group_id = await get_user_group_id(user_id=user_id)
     time_table_url = await get_group_url(group_id=user_group_id)
     time_table_text = await get_timetable(url=time_table_url)
+    if len(time_table_text) < 100:
+        time_table_text = "url группы недействителен, ничего не знаю)))"
     return await event.answer(
         message="Расписание : \n" + str(time_table_text)
     )

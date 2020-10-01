@@ -151,6 +151,8 @@ async def group_to_message(group_list: list) -> (object, str):
                                      color=ButtonColor.POSITIVE)
         except:
             pass
+        if (i % 5 == 0) and (i != 0):
+            GROUP_KB.add_row()
     return GROUP_KB, group_text
 
 

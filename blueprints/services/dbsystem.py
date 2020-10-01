@@ -1,5 +1,7 @@
 from blueprints.services.models import *
 import logging
+import ast
+import re
 
 
 async def create_user(user_id, first_name, last_name):
@@ -123,7 +125,35 @@ async def change_user_group_id(user_id: int, group_id: int):
     logging.debug("group id level changed")
 
 
-async def add_group(group_name: str, group_id: int, from_university_level_id: int, group_url: str, subgroup: int = 0) -> int:
-    Group.create(group_id=group_id, group_name=group_name, from_university_level_id=from_university_level_id, group_url=group_url,
+async def add_group(group_name: str, group_id: int, from_university_level_id: int, group_url: str,
+                    subgroup: int = 0) -> int:
+    Group.create(group_id=group_id, group_name=group_name, from_university_level_id=from_university_level_id,
+                 group_url=group_url,
                  subgroup=subgroup)
     return 1
+
+
+async def add_time_table_file(table_url: str, table_file: str):
+    TimeTableStorage.create(table_url=table_url, table_file=table_file)
+
+
+async def get_time_table_file(table_url: str):
+    db_response = TimeTableStorage.select().where(TimeTableStorage.table_url == table_url).execute()
+    table_file = ''
+    for i in db_response:
+        try:
+            table_file = i.table_file
+        except:
+            return 0
+    logging.debug("Table file successfully received")
+    return table_file
+
+
+async def get_group_time_table_file(group_id: int) -> dict:
+    group_url = await get_group_url(group_id=group_id)
+    file = str(await get_time_table_file(table_url=group_url))
+    file = re.sub("^\s+|\n|\r|\s+$", '', file)
+    print (ast.literal_eval(file))
+    return ast.literal_eval(file)
+
+

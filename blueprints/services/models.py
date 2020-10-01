@@ -48,3 +48,8 @@ class User(BaseModel):
 
     class Meta:
         table_name = 'User'
+
+
+class TimeTableStorage(BaseModel):
+    table_url = CharField(max_length=250, unique=True)
+    table_file = TextField()

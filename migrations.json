@@ -7,6 +7,7 @@
     "blueprints.services.models.University",
     "blueprints.services.models.UniversityLevel",
     "blueprints.services.models.Group",
-    "blueprints.services.models.User"
+    "blueprints.services.models.User",
+    "blueprints.services.models.TimeTableStorage"
   ]
 }

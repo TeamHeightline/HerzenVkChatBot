@@ -5,8 +5,9 @@ from vkwave.bots import (DefaultRouter,
                          TextFilter
                          )
 
+from blueprints.services.api import sort_server_json
 from utils.constants import MENU_KB, TEST_KB
-from blueprints.services.dbsystem import change_await_message, get_group_url
+from blueprints.services.dbsystem import change_await_message, get_group_url, get_group_time_table_file
 
 test_router = DefaultRouter()
 
@@ -59,4 +60,16 @@ async def first_message_to_bot_payload(event: SimpleBotEvent):
     return await event.answer(
         message="Введите айди вашей группы",
         keyboard=MENU_KB.get_keyboard()
+    )
+
+# Затестили как работать с файлом из базы данных
+
+
+@simple_bot_message_handler(test_router, TextFilter("222"))
+async def test_keyboard_dropper(event: SimpleBotEvent):
+    res_dict = (await get_group_time_table_file(1013))
+    timetable_text = await sort_server_json(res_dict)
+
+    return await event.answer(
+        message=timetable_text
     )
