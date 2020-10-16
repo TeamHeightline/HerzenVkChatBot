@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  product-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vk_bot_v2
+    command: python3 ./bot.py
+
+  db:
+    image: postgres:12.0
+#    volumes:
+#    - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=2034
+      - POSTGRES_DB=vk_bot_db
+    ports:
+    - 127.0.0.1:5442:5442
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+

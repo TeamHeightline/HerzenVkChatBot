@@ -1,6 +1,7 @@
 from peewee import *
 
-conn = PostgresqlDatabase('vk_bot_db', password='2034', user='postgres')
+conn = PostgresqlDatabase('vk_bot_db', password='2034', user='postgres', host='127.0.0.1', port=5442,
+                          database=PostgresqlDatabase)
 
 
 # pem add blueprints.services.models.Foo - добаление модели в систему контроля миграций
