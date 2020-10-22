@@ -11,12 +11,13 @@ WORKDIR  /app
 
 #ADD . /app/
 COPY . /app/
+
 # устанавливаем зависимости python
 COPY requirements.txt /app/
 RUN pip install -r ./requirements.txt
 
 RUN cd /app
-RUN pem migrate
+
 #RUN python3 ./bot.py
 
 # запускаем приложение Python
