@@ -4,6 +4,7 @@ import re
 import requests
 import json
 import logging
+import datetime
 
 from blueprints.services.dbsystem import get_time_table_file, add_time_table_file
 
@@ -36,36 +37,33 @@ async def get_json_from_server(url: str) -> dict:
 
 
 async def sort_server_json(timetable_dict: dict) -> str:
-    timetable_text = ''
-    # print(timetable_dict)
     res_dict = timetable_dict
-    # res_dict = re.sub("^\s+|\n|\r|\s+$", '', res_dict)
     res_dict = ast.literal_eval(str(res_dict))
-    # print(type(res_dict))
     timetable_text = ''
 
     for i in range(0, 6):
         try:
             timetable_text += ((res_dict['subgroups'][0]['days'][i]['day']).title() + ' ' +
-                           res_dict['subgroups'][0]['days'][i]['hours'][0]['weeks'][0]['classes'][0]['dates'][0]['dates_raw'] + "\n")
+                               res_dict['subgroups'][0]['days'][i]['hours'][0]['weeks'][0]['classes'][0]['dates'][0][
+                                   'dates_raw'] + "\n")
         except:
             pass
         for a in range(0, 4):
             try:
-             timetable_text += (res_dict['subgroups'][0]['days'][i]['hours'][a]['timespan'] + " ")
+                timetable_text += (res_dict['subgroups'][0]['days'][i]['hours'][a]['timespan'] + " ")
             except:
                 pass
             try:
-                timetable_text += (res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['class'] + " " +
-                                   res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['type'] + " \n" +
-                                   res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['teacher'] + " " +
-                                   res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['place'] + "\n")
+                timetable_text += (
+                            res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['class'] + " " +
+                            res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['type'] + " \n" +
+                            res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['teacher'] + " " +
+                            res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['place'] + "\n")
             except:
                 pass
         timetable_text += " \n \n"
 
     return timetable_text
-    # return timetable_text
 
 
 def get_timetable_test(url):
@@ -78,3 +76,40 @@ def get_timetable_test(url):
 
 
 # print(get_timetable_test("/static/schedule_view.php?id_group=12460&sem=1"))
+payload = {"groupID": 12459, "subgroup": 1}
+r = requests.get("https://herzen-timetable.herokuapp.com/api/timetable/group_forCurrentWeek", params=payload)
+r = json.loads(r.content)
+timetable_text = ''
+for a in range(0, 6):
+    if a == 0:
+        timetable_text += "Понедельник"
+    if a == 1:
+        timetable_text += "Вторник"
+    if a == 2:
+        timetable_text += "Среда"
+    if a == 3:
+        timetable_text += "Четверг"
+    if a == 4:
+        timetable_text += "Пятница"
+    if a == 5:
+        timetable_text += "Суббота"
+    if a == 6:
+        timetable_text += "Воскресенье"
+
+    timetable_text += "\n"
+
+    for i in range(0, 6):
+        try:
+            timetable_text += r[a][i]["start_time"][:2] + ":" + r[a][i]["start_time"][2:4] + "-" + r[a][i]["end_time"][:2]\
+                        + ":" + r[a][i]["end_time"][2:4]
+            timetable_text += "\n"
+            timetable_text += r[a][i]["name"]
+            timetable_text += "\n"
+            timetable_text += r[a][i]["course_link"]
+            timetable_text += "\n"
+            timetable_text += "\n"
+        except:
+            pass
+    timetable_text += "\n"
+
+print(timetable_text)

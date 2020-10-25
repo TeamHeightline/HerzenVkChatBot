@@ -23,7 +23,7 @@ University_KB_1.add_text_button(text="0", payload={"command": "set university"},
 University_KB_1.add_text_button(text="1", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
 
 University_KB_2_text = "10 - Институт информационных технологий и технологического образования \n" \
-                       "11/зжх*-89 - Институт востоковедения \n " \
+                       "11 - Институт востоковедения \n " \
                        "12 - Институт детства \n " \
                        "13 - Институт дефектологического образования и реабилитации \n " \
                        "14 - Институт иностранных языков \n " \
@@ -70,9 +70,9 @@ University_KB_3.add_text_button(text="27", payload={"command": "set university"}
 University_KB_3.add_text_button(text="28", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
 University_KB_3.add_text_button(text="29", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
 
-University_KB_4_text = "110 - Институт физической культуры и спорта" \
-                       "111 - Институт философии человека" \
-                       "112 - Институт экономики и управления" \
+University_KB_4_text = "110 - Институт физической культуры и спорта\n" \
+                       "111 - Институт философии человека\n" \
+                       "112 - Институт экономики и управления\n" \
                        "113 - Кафедра ЮНЕСКО"
 University_KB_4 = Keyboard(inline=True)
 
@@ -93,7 +93,6 @@ async def registration_university_1(event: SimpleBotEvent):
         message=University_KB_1_text,
         keyboard=University_KB_1.get_keyboard()
     )
-
 
 async def registration_university_2(event: SimpleBotEvent):
     return await event.answer(

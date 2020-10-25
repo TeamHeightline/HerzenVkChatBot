@@ -44,6 +44,14 @@ class Group(peewee.Model):
 
 
 @snapshot.append
+class TimeTableStorage(peewee.Model):
+    table_url = CharField(max_length=250, unique=True)
+    table_file = TextField()
+    class Meta:
+        table_name = "timetablestorage"
+
+
+@snapshot.append
 class User(peewee.Model):
     user_id = IntegerField(primary_key=True)
     first_name = CharField(max_length=30)
