@@ -23,7 +23,7 @@ University_KB_1.add_text_button(text="0", payload={"command": "set university"},
 University_KB_1.add_text_button(text="1", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
 
 University_KB_2_text = "10 - Институт информационных технологий и технологического образования \n" \
-                       "11/зжх*-89 - Институт востоковедения \n " \
+                       "11 - Институт востоковедения \n " \
                        "12 - Институт детства \n " \
                        "13 - Институт дефектологического образования и реабилитации \n " \
                        "14 - Институт иностранных языков \n " \
@@ -70,9 +70,9 @@ University_KB_3.add_text_button(text="27", payload={"command": "set university"}
 University_KB_3.add_text_button(text="28", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
 University_KB_3.add_text_button(text="29", payload={"command": "set university"}, color=ButtonColor.POSITIVE)
 
-University_KB_4_text = "110 - Институт физической культуры и спорта" \
-                       "111 - Институт философии человека" \
-                       "112 - Институт экономики и управления" \
+University_KB_4_text = "110 - Институт физической культуры и спорта\n" \
+                       "111 - Институт философии человека\n" \
+                       "112 - Институт экономики и управления\n" \
                        "113 - Кафедра ЮНЕСКО"
 University_KB_4 = Keyboard(inline=True)
 
@@ -93,7 +93,6 @@ async def registration_university_1(event: SimpleBotEvent):
         message=University_KB_1_text,
         keyboard=University_KB_1.get_keyboard()
     )
-
 
 async def registration_university_2(event: SimpleBotEvent):
     return await event.answer(
@@ -144,13 +143,17 @@ async def set_university(event: SimpleBotEvent):
 async def group_to_message(group_list: list) -> (object, str):
     GROUP_KB = Keyboard(inline=True)
     group_text = ''
+    b = 0
     for i in range(len(group_list)):
+        b += 1
         try:
             group_text += str(group_list[i][1]) + " - " + str(group_list[i][0] + "\n")
             GROUP_KB.add_text_button(text=group_list[i][1], payload={"command": "set group"},
                                      color=ButtonColor.POSITIVE)
         except:
             pass
+        if (b % 5 == 0) and (b != 0):
+            GROUP_KB.add_row()
     return GROUP_KB, group_text
 
 
@@ -182,4 +185,58 @@ async def set_group(event: SimpleBotEvent):
         message="Регистрация окончена, теперь вам доступно ваше расписание",
         keyboard=MENU_KB.get_keyboard()
 
+    )
+
+
+# Settings т.к. этот раздел напрямую связан с регистрацией
+#
+#
+#
+#
+
+
+@simple_bot_message_handler(registration_router, PayloadFilter({"command": "new university"}))
+async def new_university(event: SimpleBotEvent):
+    await registration_university_1(event=event)
+    await registration_university_2(event=event)
+    await registration_university_3(event=event)
+    await registration_university_4(event=event)
+    return await event.answer(
+        message='Выбирите новое направление:',
+    )
+
+
+@simple_bot_message_handler(registration_router, PayloadFilter({"command": "new course level"}))
+async def new_course_level(event: SimpleBotEvent):
+    return await event.answer(
+        message="Выбирите новый курс:",
+        keyboard=University_Level_KB.get_keyboard()
+    )
+
+
+@simple_bot_message_handler(registration_router, PayloadFilter({"command": "new group"}))
+async def new_group(event: SimpleBotEvent):
+    user_id = event.object.object.message.from_id
+    university_level = await get_level_id(user_id=user_id)
+    group_list = await get_university_group_list(from_university_level_id=university_level)
+    GROUP_KB, group_text = await group_to_message(group_list=group_list)
+    return await event.answer(
+        message="Выбирите новую группу: \n" + str(group_text),
+        keyboard=GROUP_KB.get_keyboard()
+    )
+
+SETTINGS_KB = Keyboard()
+SETTINGS_KB.add_text_button(text='Изменить направление', payload={"command": "new university"},
+                            color=ButtonColor.PRIMARY)
+SETTINGS_KB.add_row()
+SETTINGS_KB.add_text_button(text='Изменить курс', payload={"command": "new course level"}, color=ButtonColor.PRIMARY)
+SETTINGS_KB.add_row()
+SETTINGS_KB.add_text_button(text='Изменить группу', payload={"command": "new group"}, color=ButtonColor.PRIMARY)
+
+
+@simple_bot_message_handler(registration_router, PayloadFilter({"command": "settings"}))
+async def open_settings_menu(event: SimpleBotEvent):
+    return await event.answer(
+        message="Выбирите настройки, которые хотите изменить:",
+        keyboard=SETTINGS_KB.get_keyboard()
     )

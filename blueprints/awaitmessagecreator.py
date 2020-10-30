@@ -4,7 +4,7 @@ from vkwave.bots import (DefaultRouter,
                          RegexFilter
                          )
 
-from blueprints.services.dbsystem import change_await_message, get_group_url, gey_await_message, get_level_id, \
+from blueprints.services.dbsystem import change_await_message, gey_await_message, get_level_id, \
     get_university_group_list
 from utils.constants import MENU_KB
 import logging
@@ -21,15 +21,15 @@ async def await_message_processor(event: SimpleBotEvent):
     user_id = event.object.object.message.from_id
     await_message = await gey_await_message(user_id=user_id)
     print(await_message)
-    if await_message == 201:
-        timetable_url = await get_group_url(group_id=int(event.object.object.message.text))
-        await change_await_message(user_id=user_id, await_value=0)
-        logging.debug("Group url received")
-        timetable_text = await get_timetable(timetable_url)
-        return await event.answer(
-            message=timetable_text,
-            keyboard=MENU_KB.get_keyboard()
-        )
+    # if await_message == 201:
+    #     timetable_url = await get_group_url(group_id=int(event.object.object.message.text))
+    #     await change_await_message(user_id=user_id, await_value=0)
+    #     logging.debug("Group url received")
+    #     timetable_text = await get_timetable(timetable_url)
+    #     return await event.answer(
+    #         message=timetable_text,
+    #         keyboard=MENU_KB.get_keyboard()
+    #     )
     if await_message == 301:
         university_level = await get_level_id(user_id)
         group_list = await get_university_group_list(from_university_level_id=university_level)
@@ -46,4 +46,8 @@ async def await_message_processor(event: SimpleBotEvent):
                                                                                                       "расположено по "
                                                                                                       "ссылки" + str(
                 group_url)
+        )
+    else:
+        return await event.answer(
+            keyboard=MENU_KB.get_keyboard()
         )

@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  product-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vk_bot_v2
+    command: python3 ./bot.py
+    network_mode: host
+
+
+  db:
+    image: library/postgres:13
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=bot_container_db
+    ports:
+    - 5432:5432
