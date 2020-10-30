@@ -7,7 +7,7 @@ from vkwave.bots import (DefaultRouter,
 
 from blueprints.services.api import sort_server_json
 from utils.constants import MENU_KB, TEST_KB
-from blueprints.services.dbsystem import change_await_message, get_group_url, get_group_time_table_file
+from blueprints.services.dbsystem import change_await_message, get_group_time_table_file
 
 test_router = DefaultRouter()
 
@@ -37,13 +37,13 @@ async def test(event: SimpleBotEvent):
     )
 
 
-@simple_bot_message_handler(test_router, TextFilter("get url"))
-async def test_group_url(event: SimpleBotEvent):
-    r = await get_group_url(group_id=0)
-    return await event.answer(
-        message="Group url:" + str(r),
-        keyboard=MENU_KB.get_keyboard()
-    )
+# @simple_bot_message_handler(test_router, TextFilter("get url"))
+# async def test_group_url(event: SimpleBotEvent):
+#     r = await get_group_url(group_id=0)
+#     return await event.answer(
+#         message="Group url:" + str(r),
+#         keyboard=MENU_KB.get_keyboard()
+#     )
 
 
 @simple_bot_message_handler(test_router, TextFilter("!"))

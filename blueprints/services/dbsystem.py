@@ -66,16 +66,27 @@ async def change_await_message(user_id: int, await_value: int):
     logging.debug("await message changed")
 
 
-async def get_group_url(group_id: int):
+async def get_herzen_group_id(group_id: int):
     db_response = Group.select().where(Group.group_id == group_id).execute()
     for i in db_response:
         try:
-            group_url = i.group_url
+            herzen_group_id = i.herzen_group_id
         except:
             return None
     logging.debug("Group URL successfully received")
-    return group_url
+    return herzen_group_id
 
+
+
+async def get_herzen_subgroup(group_id: int):
+    db_response = Group.select().where(Group.group_id == group_id).execute()
+    for i in db_response:
+        try:
+            subgroup = i.subgroup
+        except:
+            return None
+    logging.debug("Group URL successfully received")
+    return subgroup
 
 async def change_university(user_id: int, university_id: int):
     u = User.update(university_id=university_id).where(User.user_id == user_id).execute()

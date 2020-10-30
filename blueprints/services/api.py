@@ -55,10 +55,10 @@ async def sort_server_json(timetable_dict: dict) -> str:
                 pass
             try:
                 timetable_text += (
-                            res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['class'] + " " +
-                            res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['type'] + " \n" +
-                            res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['teacher'] + " " +
-                            res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['place'] + "\n")
+                        res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['class'] + " " +
+                        res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['type'] + " \n" +
+                        res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['teacher'] + " " +
+                        res_dict['subgroups'][0]['days'][i]['hours'][a]['weeks'][0]['classes'][0]['place'] + "\n")
             except:
                 pass
         timetable_text += " \n \n"
@@ -76,11 +76,57 @@ def get_timetable_test(url):
 
 
 # print(get_timetable_test("/static/schedule_view.php?id_group=12460&sem=1"))
-payload = {"groupID": 12459, "subgroup": 1}
-r = requests.get("https://herzen-timetable.herokuapp.com/api/timetable/group_forCurrentWeek", params=payload)
-r = json.loads(r.content)
-timetable_text = ''
-for a in range(0, 6):
+
+
+async def new_get_timetable(groupID=12460, subgroup=0):
+    payload = {"groupID": groupID, "subgroup": subgroup}
+    r = requests.get("https://herzen-timetable.herokuapp.com/api/timetable/group_forCurrentWeek", params=payload)
+    r = json.loads(r.content)
+    timetable_text = ''
+    for a in range(0, 6):
+        if a == 0:
+            timetable_text += "Понедельник"
+        if a == 1:
+            timetable_text += "Вторник"
+        if a == 2:
+            timetable_text += "Среда"
+        if a == 3:
+            timetable_text += "Четверг"
+        if a == 4:
+            timetable_text += "Пятница"
+        if a == 5:
+            timetable_text += "Суббота"
+        if a == 6:
+            timetable_text += "Воскресенье"
+
+        timetable_text += "\n"
+
+        for i in range(0, 6):
+            try:
+                timetable_text += r[a][i]["start_time"][:2] + ":" + r[a][i]["start_time"][2:4] + "-" + r[a][i][
+                                                                                                           "end_time"][
+                                                                                                       :2] \
+                                  + ":" + r[a][i]["end_time"][2:4]
+                timetable_text += "\n"
+                timetable_text += r[a][i]["name"]
+                timetable_text += "\n"
+                timetable_text += r[a][i]["course_link"]
+                timetable_text += "\n"
+                timetable_text += "\n"
+            except:
+                pass
+        timetable_text += "\n"
+
+    return timetable_text
+
+
+async def new_get_timetable_for_week_day(groupID=12460, subgroup=0, day=0):
+    payload = {"groupID": groupID, "subgroup": subgroup}
+    r = requests.get("https://herzen-timetable.herokuapp.com/api/timetable/group_forCurrentWeek", params=payload)
+    r = json.loads(r.content)
+    timetable_text = ''
+    a = day
+    print(a)
     if a == 0:
         timetable_text += "Понедельник"
     if a == 1:
@@ -100,8 +146,10 @@ for a in range(0, 6):
 
     for i in range(0, 6):
         try:
-            timetable_text += r[a][i]["start_time"][:2] + ":" + r[a][i]["start_time"][2:4] + "-" + r[a][i]["end_time"][:2]\
-                        + ":" + r[a][i]["end_time"][2:4]
+            timetable_text += r[a][i]["start_time"][:2] + ":" + r[a][i]["start_time"][2:4] + "-" + r[a][i][
+                                                                                                       "end_time"][
+                                                                                                   :2] \
+                              + ":" + r[a][i]["end_time"][2:4]
             timetable_text += "\n"
             timetable_text += r[a][i]["name"]
             timetable_text += "\n"
@@ -112,4 +160,5 @@ for a in range(0, 6):
             pass
     timetable_text += "\n"
 
-print(timetable_text)
+
+    return timetable_text

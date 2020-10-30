@@ -1,7 +1,11 @@
 from vkwave.bots import Keyboard, ButtonColor
 
 MENU_KB = Keyboard()
-MENU_KB.add_text_button(text="Расписание", payload={"command": "timetable"}, color=ButtonColor.POSITIVE)
+MENU_KB.add_text_button(text="Расписание на неделю", payload={"command": "timetable"}, color=ButtonColor.POSITIVE)
+MENU_KB.add_row()
+MENU_KB.add_text_button(text="На вчерашний день", payload={"command": "previous_day_timetable"}, color=ButtonColor.POSITIVE)
+MENU_KB.add_text_button(text="На сегодня", payload={"command": "today_timetable"}, color=ButtonColor.POSITIVE)
+MENU_KB.add_text_button(text="На завтра", payload={"command": "next_day_timetable"}, color=ButtonColor.POSITIVE)
 MENU_KB.add_row()
 MENU_KB.add_text_button(text="Настройки", payload={"command": "settings"}, color=ButtonColor.SECONDARY)
 

@@ -143,14 +143,16 @@ async def set_university(event: SimpleBotEvent):
 async def group_to_message(group_list: list) -> (object, str):
     GROUP_KB = Keyboard(inline=True)
     group_text = ''
+    b = 0
     for i in range(len(group_list)):
+        b += 1
         try:
             group_text += str(group_list[i][1]) + " - " + str(group_list[i][0] + "\n")
             GROUP_KB.add_text_button(text=group_list[i][1], payload={"command": "set group"},
                                      color=ButtonColor.POSITIVE)
         except:
             pass
-        if (i % 5 == 0) and (i != 0):
+        if (b % 5 == 0) and (b != 0):
             GROUP_KB.add_row()
     return GROUP_KB, group_text
 
@@ -219,7 +221,7 @@ async def new_group(event: SimpleBotEvent):
     group_list = await get_university_group_list(from_university_level_id=university_level)
     GROUP_KB, group_text = await group_to_message(group_list=group_list)
     return await event.answer(
-        message="Выбирите новую группу:" + str(group_text),
+        message="Выбирите новую группу: \n" + str(group_text),
         keyboard=GROUP_KB.get_keyboard()
     )
 

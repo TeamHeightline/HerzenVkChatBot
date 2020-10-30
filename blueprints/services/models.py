@@ -32,7 +32,7 @@ class Group(BaseModel):
     from_university_level = ForeignKeyField(UniversityLevel)
     group_name = CharField(max_length=200)
     group_id = IntegerField(primary_key=True)
-    herzen_group_url = IntegerField()
+    herzen_group_id = IntegerField()
     subgroup = IntegerField()
 
 
