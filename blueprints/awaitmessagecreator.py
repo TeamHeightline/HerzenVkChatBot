@@ -5,7 +5,7 @@ from vkwave.bots import (DefaultRouter,
                          )
 
 from blueprints.services.dbsystem import change_await_message, gey_await_message, get_level_id, \
-    get_university_group_list
+    get_university_group_list, get_user
 from utils.constants import MENU_KB
 import logging
 from blueprints.services.api import get_timetable
@@ -20,7 +20,7 @@ await_router = DefaultRouter()
 async def await_message_processor(event: SimpleBotEvent):
     user_id = event.object.object.message.from_id
     await_message = await gey_await_message(user_id=user_id)
-    print(await_message)
+    # print(await_message)
     # if await_message == 201:
     #     timetable_url = await get_group_url(group_id=int(event.object.object.message.text))
     #     await change_await_message(user_id=user_id, await_value=0)
@@ -42,12 +42,9 @@ async def await_message_processor(event: SimpleBotEvent):
         await change_await_message(user_id=user_id, await_value=0)
         return await event.answer(
             message="Создана группа " + str(group_name) + " ей присвоено айди \n " + str(new_group_id) + "рассписание "
-                                                                                                      "этой группы "
-                                                                                                      "расположено по "
-                                                                                                      "ссылки" + str(
-                group_url)
+            "этой группы расположено по ссылки" + str(group_url)
         )
     else:
-        return await event.answer(
-            keyboard=MENU_KB.get_keyboard()
-        )
+        user_id = event.object.object.message.from_id
+        user_first_name, user_last_name = await get_user(user_id)
+        logging.info(user_first_name + " " + user_last_name + " написал " + event.object.object.message.text)

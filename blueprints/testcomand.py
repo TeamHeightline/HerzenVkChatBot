@@ -73,3 +73,4 @@ async def test_keyboard_dropper(event: SimpleBotEvent):
     return await event.answer(
         message=timetable_text
     )
+
