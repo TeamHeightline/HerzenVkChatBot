@@ -8,7 +8,7 @@ from blueprints import (test_router,
                         await_router,
                         registration_router
                         )
-logging.basicConfig(level="DEBUG")
+logging.basicConfig(level="INFO")
 
 TOKEN = "23da22108c2b8eaa19087eff001e14a958599990c22791007b0a52cfeaa7a929c34c98d5f4e639a7195f8"
 GROUP_ID = 198502355

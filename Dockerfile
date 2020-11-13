@@ -21,5 +21,5 @@ RUN cd /app
 #RUN python3 ./bot.py
 
 # запускаем приложение Python
-#CMD ["python", "bot.py"]
+CMD ["python", "./bot.py"]
 

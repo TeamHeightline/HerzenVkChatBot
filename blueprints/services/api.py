@@ -6,26 +6,6 @@ import json
 import logging
 import datetime
 
-from blueprints.services.dbsystem import get_time_table_file, add_time_table_file
-
-
-async def get_timetable(url):
-    res_dict = await get_time_table_file(table_url=url)
-    # print(res_dict)
-    # Отказываемся от идеи проверки наличая насписания каждый раз, получение и сохраниение расписания только при
-    # регистрации
-    if len(res_dict) < 100:
-        res_dict = await get_json_from_server(url=url)
-        logging.debug("На сервере json не найден")
-        # if len(res_dict) > 100:
-        try:
-            logging.debug("Попытка сохранения файла на сервере")
-            await add_time_table_file(table_url=url, table_file=str(res_dict))
-        except:
-            pass
-    timetable_text = await sort_server_json(res_dict)
-    return timetable_text
-
 
 async def get_json_from_server(url: str) -> dict:
     payload = {"groupURL": url}
@@ -126,7 +106,6 @@ async def new_get_timetable_for_week_day(groupID=12460, subgroup=0, day=0):
     r = json.loads(r.content)
     timetable_text = ''
     a = day
-    print(a)
     if a == 0:
         timetable_text += "Понедельник"
     if a == 1:
