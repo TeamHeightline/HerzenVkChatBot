@@ -1,5 +1,4 @@
 from vkwave.bots import BaseMiddleware, BotEvent, MiddlewareResult
-from blueprints.services.dbsystem import is_user_admin
 import logging
 
 
