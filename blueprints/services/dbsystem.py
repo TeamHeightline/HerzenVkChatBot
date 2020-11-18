@@ -11,18 +11,15 @@ class ActiveUser(object):
         self.id = id
         db_response = User.select().where(User.user_id == self.id).execute()
         for i in db_response:
-            try:
-                self.first_name = i.first_name
-                self.last_name = i.last_name
-                self.group_id = i.group_id
-                self.group_id = i.group_id
-                self.university_level_id = i.university_level_id
-                self.await_message = i.await_message
-                self.is_admin = i.is_admin
-                self.herzen_group_id = i.herzen_group_id
-                self.university_id = i.university_id
-            except:
-                pass
+            self.first_name = i.first_name
+            self.last_name = i.last_name
+            self.group_id = i.group_id
+            self.university_level_id = i.university_level_id
+            self.await_message = i.await_message
+            self.is_admin = i.is_admin
+            self.university_id = i.university_id
+
+
 
     async def change_user_group_id(self):
         User.update(group_id=self.group_id).where(User.user_id == self.id).execute()
@@ -41,12 +38,18 @@ class ActiveUser(object):
         logging.debug("university level changed")
 
     @staticmethod
-    async def get_all_users() -> list:
+    def get_all_users() -> list:
         db_response = User.select().execute()
         user_list = []
         for i in db_response:
             user_list.append(i.user_id)
         return user_list
+
+
+class Moderator(ActiveUser):
+    @staticmethod
+    async def create_group():
+        pass
 
 
 class ActiveGroup(object):
@@ -78,16 +81,6 @@ class ActiveGroup(object):
                 pass
         return group_list
 
-
-async def get_university_group_list(from_university_level_id: int) -> list:
-    db_response = Group.select().where(Group.from_university_level == from_university_level_id)
-    group_list = [[]]
-    for i in db_response:
-        try:
-            group_list.append([i.group_name, i.group_id])
-        except:
-            pass
-    return group_list
 
 
 

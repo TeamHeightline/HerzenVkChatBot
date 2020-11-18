@@ -139,5 +139,45 @@ async def new_get_timetable_for_week_day(groupID=12460, subgroup=0, day=0):
             pass
     timetable_text += "\n"
 
+    return timetable_text
 
+
+async def get_subject(groupID=12460, subgroup=0, day=0, number_of_subject=0):
+    payload = {"groupID": groupID, "subgroup": subgroup}
+    r = requests.get("https://herzen-timetable.herokuapp.com/api/timetable/group_forCurrentWeek", params=payload)
+    r = json.loads(r.content)
+    timetable_text = ''
+    a = day
+    if a == 0:
+        timetable_text += "Понедельник"
+    if a == 1:
+        timetable_text += "Вторник"
+    if a == 2:
+        timetable_text += "Среда"
+    if a == 3:
+        timetable_text += "Четверг"
+    if a == 4:
+        timetable_text += "Пятница"
+    if a == 5:
+        timetable_text += "Суббота"
+    if a == 6:
+        timetable_text += "Воскресенье"
+
+    timetable_text += "\n"
+
+    i = number_of_subject
+    try:
+        timetable_text += r[a][i]["start_time"][:2] + ":" + r[a][i]["start_time"][2:4] + "-" + r[a][i][
+                                                                                                   "end_time"][
+                                                                                               :2] \
+                          + ":" + r[a][i]["end_time"][2:4]
+        timetable_text += "\n"
+        timetable_text += r[a][i]["name"]
+        timetable_text += "\n"
+        timetable_text += r[a][i]["course_link"]
+        timetable_text += "\n"
+        timetable_text += "\n"
+    except:
+        pass
+    timetable_text += "\n"
     return timetable_text

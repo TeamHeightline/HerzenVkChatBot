@@ -12,6 +12,12 @@
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>postgres://gdykawzvpmpmol:1020b10af941eb45302002b77f3fee38604bf0165aefc610a0829e87f7c81375@ec2-54-75-244-161.eu-west-1.compute.amazonaws.com:5432/dc2t1qfjtc4kvm</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="dc2t1qfjtc4kvm@ec2-54-75-244-161.eu-west-1.compute.amazonaws.com" uuid="68015105-e76e-47e5-9bfb-376b72b50052">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://ec2-54-75-244-161.eu-west-1.compute.amazonaws.com:5432/dc2t1qfjtc4kvm</jdbc-url>
     </data-source>
   </component>

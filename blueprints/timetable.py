@@ -21,7 +21,7 @@ async def time_table_view(event: SimpleBotEvent):
     user_id = event.object.object.message.from_id
     Usr = ActiveUser(id=user_id)
     herzenGroup = ActiveGroup(group_id=Usr.group_id)
-    time_table_text = await new_get_timetable(groupID=herzenGroup.id, subgroup=herzenGroup.subgroup)
+    time_table_text = await new_get_timetable(groupID=herzenGroup.herzen_group_id, subgroup=herzenGroup.subgroup)
     if len(time_table_text) < 5:
         time_table_text = "ошибка в данных группы, неверно указан groupID или subgroup"
     return await event.answer(

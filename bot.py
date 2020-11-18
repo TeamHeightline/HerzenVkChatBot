@@ -1,5 +1,9 @@
+import threading
+
 from vkwave.bots import SimpleLongPollBot
 import logging
+
+from blueprints.scheduler import every_day_subject_sender
 from middlewares import UserEnterMiddleware, IsUserAdminMiddleware
 
 from blueprints import (test_router,
@@ -14,6 +18,10 @@ TOKEN = "23da22108c2b8eaa19087eff001e14a958599990c22791007b0a52cfeaa7a929c34c98d
 GROUP_ID = 198502355
 
 bot = SimpleLongPollBot(TOKEN, group_id=GROUP_ID)
+
+
+t = threading.Thread(target=every_day_subject_sender)
+t.start()
 
 bot.middleware_manager.add_middleware(UserEnterMiddleware())
 

@@ -63,3 +63,5 @@ class TextTimeTableStorage(BaseModel):
     herzen_subgroup = IntegerField(primary_key=False)
 
 
+class Event(BaseModel):
+    event_name = CharField(max_length=200)

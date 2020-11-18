@@ -1,7 +1,7 @@
 from vkwave.bots import Keyboard, ButtonColor, SimpleBotEvent, DefaultRouter, simple_bot_message_handler, TextFilter, \
     PayloadFilter
 
-from blueprints.services.dbsystem import get_university_group_list, ActiveUser, ActiveGroup
+from blueprints.services.dbsystem import ActiveUser, ActiveGroup
 
 # Доки ) короче, документация, здесь у нас модуль регистрации, вот так вот, вообще, что туть происходит,
 # здесь у нас хрянятся клавиатуды со всеми университетами, значениям на кнопушках соответствует ячейка
