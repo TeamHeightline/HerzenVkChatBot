@@ -1,6 +1,7 @@
 from vkwave.bots import Keyboard, ButtonColor, SimpleBotEvent, DefaultRouter, simple_bot_message_handler, TextFilter, \
     PayloadFilter
 
+from blueprints.scheduler import send_msg
 from blueprints.services.dbsystem import ActiveUser, ActiveGroup
 
 # Доки ) короче, документация, здесь у нас модуль регистрации, вот так вот, вообще, что туть происходит,
@@ -241,3 +242,12 @@ async def open_settings_menu(event: SimpleBotEvent):
         message="Выбирите настройки, которые хотите изменить:",
         keyboard=SETTINGS_KB.get_keyboard()
     )
+
+
+OFFER_KB = Keyboard(inline=True)
+OFFER_KB.add_text_button(text="Зарегистрироваться", payload={"command": "new university"}, color=ButtonColor.PRIMARY)
+
+
+async def offer_to_register(event, user_id):
+    await event.api_ctx.messages.send(user_id=int(user_id), message="Добро пожаловать, для начала пройдите регистрацию",
+                                      keyboard=OFFER_KB.get_keyboard(), random_id=0)

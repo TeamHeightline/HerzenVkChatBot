@@ -29,6 +29,7 @@ bot.middleware_manager.add_middleware(UserEnterMiddleware())
 bot.dispatcher.add_router(registration_router)
 
 bot.dispatcher.add_router(test_router)
+
 bot.dispatcher.add_router(time_table_router)
 
 # Warning! ONLY ADMIN PERMISSION

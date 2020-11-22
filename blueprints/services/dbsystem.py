@@ -11,15 +11,16 @@ class ActiveUser(object):
         self.id = id
         db_response = User.select().where(User.user_id == self.id).execute()
         for i in db_response:
-            self.first_name = i.first_name
-            self.last_name = i.last_name
-            self.group_id = i.group_id
-            self.university_level_id = i.university_level_id
-            self.await_message = i.await_message
-            self.is_admin = i.is_admin
-            self.university_id = i.university_id
-
-
+            try:
+                self.first_name = i.first_name
+                self.last_name = i.last_name
+                self.group_id = i.group_id
+                self.university_level_id = i.university_level_id
+                self.await_message = i.await_message
+                self.is_admin = i.is_admin
+                self.university_id = i.university_id
+            except:
+                logging.info("Ошибка создания класса для пользователя")
 
     async def change_user_group_id(self):
         User.update(group_id=self.group_id).where(User.user_id == self.id).execute()

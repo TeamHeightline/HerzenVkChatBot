@@ -16,16 +16,16 @@ class User(object):
         self.id = id
 
 
-def send_msg(text, user_id):
+def send_msg(text, user_id, keyboard=""):
     u = User(id=user_id)
 
     bot.vk.Message.send(
         peer=u,
-        message=text
+        message=text,
     )
 
 
-def send_to_all_user(nomber_of_subject):
+def send_to_all_user(number_of_subject):
     user_list = ActiveUser.get_all_users()
     print(user_list)
     loop = asyncio.new_event_loop()
@@ -36,8 +36,9 @@ def send_to_all_user(nomber_of_subject):
         text = loop.run_until_complete(
             get_subject(groupID=agr.herzen_group_id, subgroup=agr.subgroup, day=datetime.datetime.weekday(datetime
                                                                                                           .datetime.now()),
-                        number_of_subject=nomber_of_subject))
-        send_msg(user_id=i, text=text)
+                        number_of_subject=number_of_subject))
+        if len(text) > 15:
+            send_msg(user_id=i, text=text)
 
 
 # Время отличается на 3 часа, т.к. датацентр в другом часовом поясе

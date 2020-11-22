@@ -6,8 +6,7 @@ from vkwave.bots import (DefaultRouter,
 
 from blueprints.services.dbsystem import ActiveUser
 import logging
-from .registration import new_university
-
+from .registration import new_university, offer_to_register
 
 await_router = DefaultRouter()
 
@@ -35,6 +34,8 @@ async def await_message_processor(event: SimpleBotEvent):
     else:
         user_id = event.object.object.message.from_id
         Usr = ActiveUser(user_id)
-        logging.info(Usr.first_name + " " + Usr.last_name + " написал " + event.object.object.message.text)
-        if await Usr.university_id is None:
-            await new_university(event=event)
+        if not hasattr(Usr, "first_name") or Usr.university_id is None:
+            await offer_to_register(event=event, user_id=user_id)
+        else:
+            logging.info(Usr.first_name + " " + Usr.last_name + " написал " + event.object.object.message.text)
+
